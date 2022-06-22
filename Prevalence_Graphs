@@ -1,0 +1,55 @@
+#####Prevalence Graphs for SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+
+#####Prevalence Bar Graph#####
+#Prevalence of parasitized fish by tributary:
+ParasiteTributary <- SERCacanth %>% 
+  count(TributaryLocation, Parasitized) %>%  # get counts by Tributary and Parasite (Y/N)
+  group_by(TributaryLocation) %>%        # Group so proportions are out  total
+  mutate(proportion = n/sum(n)*100) # calculate proportions of total
+
+head(Parasite_Tributary) # Preview data
+
+# Parasites in all samples by Tributary
+ggplot(Parasite_Tributary) +  
+  geom_col(
+    mapping = aes(
+      x = proportion,                 # show pre-calculated proportion values
+      y = fct_rev(Tributary_Location),          # reverse level order so missing/other at bottom
+      fill = Parasitized),                # stacked by outcome
+    width = 0.5) +                    # thinner bars (out of 1)
+  theme_minimal() +                  # Minimal theme 
+  theme(legend.position = "bottom") +
+  labs(subtitle = "Prevalence of Parasite Count By Tributary",
+       fill = "Parasite",             # legend title
+       y = "Tributary",                  # y axis title
+       x = "Parasite Prevalence")  # x axis title
+
+
+
+#Prevalence of parasitized fish by Season:
+ 
+ParasiteSeason <- SERCacanth %>% 
+  count(Season, Parasitized) %>%  # get counts by Tributary and Parasite (Y/N)
+  group_by(Season) %>%        # Group so proportions are out  total
+  mutate(proportion = n/sum(n)*100) # calculate proportions of total
+
+head(ParasiteSeason) # Preview data
+
+# Parasites in all samples by Tributary ##ERROR
+ggplot(ParasiteSeason) +  
+  geom_col(
+    mapping = aes(
+      x = ParasiteSeason,                 # show pre-calculated proportion values
+      y = fct_rev(Parasitized),          # reverse level order so missing/other at bottom
+      fill = Parasitized),                # stacked by outcome
+    width = 0.5) +                    # thinner bars (out of 1)
+  theme_minimal() +                  # Minimal theme 
+  theme(legend.position = "bottom") +
+  labs(subtitle = "Prevalence of Parasite Count By Season",
+       fill = "Parasite",             # legend title
+       y = "Season",                  # y axis title
+       x = "Parasite Prevalence")  # x axis title
