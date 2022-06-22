@@ -1,0 +1,30 @@
+#####Statistical Analysis for SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+#Kruskal-Wallis: nonparametric approach to the one-way ANOVA. 
+#Wilcoxon rank-sum test is used to compare two independent samples, 
+
+kruskal.test(SERCacanth$Acanthocephalan, SERCacanth$BodyWWt_g)#numerical, grouping
+#Kruskal-Wallis chi-squared = 331.5, df = 398, p-value = 0.9934
+kruskal.test(SERCacanth$Parasitized, SERCacanth$BodyWWt_g) #numerical, grouping
+#Kruskal-Wallis chi-squared = 330.94, df = 398, p-value = 0.9938
+
+kruskal.test(SERCacanth$Acanthocephalan, SERCacanth$FL_mm) 
+#Kruskal-Wallis chi-squared = 122.75, df = 166, p-value = 0.9951
+kruskal.test(SERCacanth$Parasitized, SERCacanth$FL_mm) 
+#Kruskal-Wallis chi-squared = 123.74, df = 166, p-value = 0.994
+
+kruskal.test(SERCacanth$Acanthocephalan, SERCacanth$TL_mm) 
+#Kruskal-Wallis chi-squared = 135.08, df = 159, p-value = 0.9158
+kruskal.test(SERCacanth$Parasitized, SERCacanth$TL_mm) 
+#Kruskal-Wallis chi-squared = 135.36, df = 159, p-value = 0.913
+
+#When the p-value is significant, do the pairwise comparison to identify significantly different groups:
+pairwise.wilcox.test(SERCacanth$BodyWWt_g, SERCacanth$Parasitized,
+                     p.adjust.method = "BH") 
+pairwise.wilcox.test(SERCacanth$FL_mm, SERCacanth$Parasitized,
+                     p.adjust.method = "BH") 
+pairwise.wilcox.test(SERCacanth$TL_mm, SERCacanth$Parasitized,
+                     p.adjust.method = "BH") 
