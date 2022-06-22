@@ -1,0 +1,29 @@
+##### Tables for SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+##### Visualizations ######
+#How to make a pivot table 
+library(pivottabler)
+pt <- PivotTable$new()
+pt$addData(SERCacanth)
+pt$addColumnDataGroups("Acanthocephalan")
+pt$addRowDataGroups("TL_mm")
+pt$defineCalculation(calculationName="TotalAcanthocephalans", summariseExpression="n()")
+pt$renderPivot()
+pt$evaluatePivot()
+
+pt
+
+#Table 1: 
+#A table that summarizes one variable and gives the mean and standard deviation for the value of that variable
+#In this case "Classification" (Taxonomic Classification of the Nematodes):
+group_by(SERCacanth, TributaryLocation) %>%  #indicates that I am grouping the dataset "YOY" by the various "Classification"
+  summarise(                       #Being summarized by mean and sd.
+    mean = mean(Acanthocephalan) ,
+    sd = sd(Acanthocephalan, na.rm = TRUE))
+
+#Different ways to create tables:
+# cross tabulation: Column x Row (Two variables)
+table(acanthocephalan_data1$Acanthocephalan, StripedBassDietDissections_2022$Season)
