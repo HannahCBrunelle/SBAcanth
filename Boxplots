@@ -1,0 +1,30 @@
+##### Boxplots for SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+#Parasites per Season
+boxplot(SERCANTH1$Acanthocephalan ~ SERCANTH1$Season)
+
+ggplot(SERCANTH1) +
+  aes(x = Season, y = Acanthocephalan, colour = Season) +
+  geom_boxplot()
+
+#Parasites per Tributary
+boxplot(SERCANTH1$Acanthocephalan ~ SERCANTH1$Tributary)
+
+ggplot(SERCANTH1) +
+  aes(x = Tributary, y = Acanthocephalan, colour = Tributary) +
+  geom_boxplot()
+
+#Parasites per BodyWeight
+boxplot(SERCacanth$Acanthocephalan ~ SERCacanth$BodyWWt_g)
+
+#Parasites per Tail Length
+boxplot(SERCacanth$Acanthocephalan ~ SERCacanth$TL_mm)
+
+#Parasites per Fork Length
+boxplot(SERCacanth$Acanthocephalan ~ SERCacanth$FL_mm)
+
+#Parasites per BodyWeight
+boxplot(SERCacanth$Acanthocephalan ~ SERCacanth$Parasitized)
