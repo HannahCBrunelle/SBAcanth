@@ -1,0 +1,19 @@
+#####Testing Normality with SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+#####Shapiro Normality Test#####
+#Add value to the histogram of the distribution
+#The null-hypothesis of this test is that the population is normally distributed. 
+#A data set with a p value of less than .05 rejects the null hypothesis that the data are from a normally distributed population
+shapiro.test(SERCacanth$Acanthocephalan) #p-value < 2.2e-16
+shapiro.test(SERCacanth$FL_mm) #p-value < 2.2e-16
+shapiro.test(SERCacanth$TL_mm) #p-value < 2.2e-16
+shapiro.test(SERCacanth$BodyWWt_g) #p-value < 2.2e-16
+
+#Histograms
+hist(SERCacanth$FL_mm) #NOT NORMAL
+hist(SERCacanth$TL_mm) #NOT NORMAL
+hist(SERCacanth$BodyWWt_g) #NOT NORMAL
+hist(SERCacanth$Acanthocephalan) #NOT NORMAL
