@@ -19,11 +19,11 @@ pt
 #Table 1: 
 #A table that summarizes one variable and gives the mean and standard deviation for the value of that variable
 #In this case "Classification" (Taxonomic Classification of the Nematodes):
-group_by(SERCacanth, TributaryLocation) %>%  #indicates that I am grouping the dataset "YOY" by the various "Classification"
+group_by(DissectionsK, Tributary) %>%  #indicates that I am grouping the dataset "YOY" by the various "Classification"
   summarise(                       #Being summarized by mean and sd.
     mean = mean(Acanthocephalan) ,
     sd = sd(Acanthocephalan, na.rm = TRUE))
 
 #Different ways to create tables:
 # cross tabulation: Column x Row (Two variables)
-table(acanthocephalan_data1$Acanthocephalan, StripedBassDietDissections_2022$Season)
+table(DissectionsK$Acanthocephalan, DissectionsK$Season)
