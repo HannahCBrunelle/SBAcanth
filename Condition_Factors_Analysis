@@ -1,0 +1,36 @@
+##### Condition Factors (K) Analysis SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+head(DissectionsK)
+str(DissectionsK)
+
+#Mean and SD of Condition Factors
+ConditionF <- mean(DissectionsK$K, na.rm = TRUE) #1.214
+ConditionSD <- sd(DissectionsK$K, na.rm = TRUE) #0.129
+
+#Conditions Factor and Parasitized Fish 
+group_by(DissectionsK, Parasitized) %>%  
+  summarise(                       #Being summarized by mean and sd.
+    mean = mean(K) ,
+    sd = sd(K, na.rm = TRUE))
+
+#Conditions Factor and Acanthocephalan Counts 
+group_by(DissectionsK, Acanthocephalan) %>%  
+  summarise(                       #Being summarized by mean and sd.
+    mean = mean(K) ,
+    sd = sd(K, na.rm = TRUE))
+
+#Kruskal Test
+kruskal.test(DissectionsK$Acanthocephalan, DissectionsK$K)
+#Kruskal-Wallis chi-squared = 438.68, df = 436, p-value = 0.455
+kruskal.test(DissectionsK$Parasitized, DissectionsK$K) 
+#Kruskal-Wallis chi-squared = 438.58, df = 438, p-value = 0.4833
+
+#Parasites per Season
+boxplot(DissectionsK$K ~ DissectionsK$Parasitized)
+
+ggplot(DissectionsK) +
+  aes(x = Parasitized, y = K, colour = Parasitized, na.rm = TRUE) +
+  geom_boxplot()
