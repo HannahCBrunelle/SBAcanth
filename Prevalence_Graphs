@@ -3,22 +3,21 @@
 #Advisor: Dr.Katrina Lohan
 #Date: June 14,2022 - 
 
-
 #####Prevalence Bar Graph#####
 #Prevalence of parasitized fish by tributary:
-ParasiteTributary <- SERCacanth %>% 
-  count(TributaryLocation, Parasitized) %>%  # get counts by Tributary and Parasite (Y/N)
-  group_by(TributaryLocation) %>%        # Group so proportions are out  total
+ParasiteTributary <- DissectionsK %>% 
+  count(Tributary, Parasitized) %>%  # get counts by Tributary and Parasite (Y/N)
+  group_by(Tributary) %>%        # Group so proportions are out  total
   mutate(proportion = n/sum(n)*100) # calculate proportions of total
 
-head(Parasite_Tributary) # Preview data
+head(ParasiteTributary) # Preview data
 
 # Parasites in all samples by Tributary
-ggplot(Parasite_Tributary) +  
+ggplot(ParasiteTributary) +  
   geom_col(
     mapping = aes(
       x = proportion,                 # show pre-calculated proportion values
-      y = fct_rev(Tributary_Location),          # reverse level order so missing/other at bottom
+      y = fct_rev(Tributary),          # reverse level order so missing/other at bottom
       fill = Parasitized),                # stacked by outcome
     width = 0.5) +                    # thinner bars (out of 1)
   theme_minimal() +                  # Minimal theme 
@@ -28,11 +27,8 @@ ggplot(Parasite_Tributary) +
        y = "Tributary",                  # y axis title
        x = "Parasite Prevalence")  # x axis title
 
-
-
-#Prevalence of parasitized fish by Season:
- 
-ParasiteSeason <- SERCacanth %>% 
+#Prevalence of parasitized fish by Season: 
+ParasiteSeason <- DissectionsK %>% 
   count(Season, Parasitized) %>%  # get counts by Tributary and Parasite (Y/N)
   group_by(Season) %>%        # Group so proportions are out  total
   mutate(proportion = n/sum(n)*100) # calculate proportions of total
