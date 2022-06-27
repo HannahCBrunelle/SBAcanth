@@ -2,29 +2,33 @@
 #Author: Hannah C Brunelle
 #Advisor: Dr.Katrina Lohan
 #Date: June 14,2022 - 
+#Contact: (508) 246-9084 and brunellehannah@yahoo.com
 
 #Parasites per Season
-boxplot(SERCANTH1$Acanthocephalan ~ SERCANTH1$Season)
+boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$Season)
 
-ggplot(SERCANTH1) +
+ggplot(DissectionsK) +
   aes(x = Season, y = Acanthocephalan, colour = Season) +
   geom_boxplot()
 
 #Parasites per Tributary
-boxplot(SERCANTH1$Acanthocephalan ~ SERCANTH1$Tributary)
+boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$Tributary)
 
-ggplot(SERCANTH1) +
+ggplot(DissectionsK) +
   aes(x = Tributary, y = Acanthocephalan, colour = Tributary) +
   geom_boxplot()
 
 #Parasites per BodyWeight
-boxplot(SERCacanth$Acanthocephalan ~ SERCacanth$BodyWWt_g)
+boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$BodyWWt_g)
 
 #Parasites per Tail Length
-boxplot(SERCacanth$Acanthocephalan ~ SERCacanth$TL_mm)
+boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$TL_cm)
 
 #Parasites per Fork Length
-boxplot(SERCacanth$Acanthocephalan ~ SERCacanth$FL_mm)
+boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$FL_cm)
 
-#Parasites per BodyWeight
-boxplot(SERCacanth$Acanthocephalan ~ SERCacanth$Parasitized)
+#Parasites per Parasitism 
+boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$Parasitized)
+
+#Parasites per Condition Factor
+boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$K)
