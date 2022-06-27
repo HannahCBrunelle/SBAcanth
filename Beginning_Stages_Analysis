@@ -4,15 +4,21 @@
 #Date: June 14,2022 - 
 
 #Import data
-dissections <-read.csv("StripedBassDietDissections_2022.csv", header=TRUE)
+library(readxl)
+DissectionsK <- read_excel("~/Desktop/DissectionsK.xls")
+View(DissectionsK)
 
-SERCacanth <- acanthocephalan_data1[-c(1811:nrow(acanthocephalan_data1)), ]
+#Removing NA
+#For some reason R is adding in LOTs of extra rows 
+DissectionsK <- DissectionsK[-c(575:nrow(DissectionsK)), ]
+DissectionsK
+
 #Investigating Data
-str(SERCacanth)
-head(SERCacanth)
+str(DissectionsK)
+head(DissectionsK)
 
 #Preview the Data 
-View(SERCacanth)
+View(DissectionsK)
 
 #Loading in Packages 
 library(tidyverse)
@@ -20,26 +26,24 @@ library(lubridate)
 library(dplyr)
 library(ggpubr)
 
-#Selecting Columns 
-select(dissections, FL_mm, TL_mm, Age_Class, BodyWWt_g, Acanthocephalan, Tributary)
-
 #####Selecting only the data for Acanthocephalans#####
 #Looking at fork and tail length, age, body weight, and total count of the worms
-SERCacanth <- select(dissections, FL_mm, TL_mm, Age_Class, BodyWWt_g, Acanthocephalan, Tributary, Season)
+SERCacanth <- select( FL_mm, TL_mm, Age_Class, BodyWWt_g, Acanthocephalan, Tributary, Season)
 view(SERCacanth)
 
 #Creating a class of parasitized striped bass (yes/no)
 library(tibble)
-SERCacanth <- acanthocephalan_data %>%
+DissectionsK <- DissectionsK%>%
   add_column(Parasitized = 
-               if_else(SERCacanth$Acanthocephalan > 0, "Yes", "No"),
+               if_else(DissectionsK$Acanthocephalan > 0, "Yes", "No"),
              .after="Acanthocephalan")
-table(SERCacanth$Parasitized) #Checking out the new class
-table(acanthocephalan_data$Acanthocephalan) #making sure all was still all right
+
+table(DissectionsK$Parasitized) #Checking out the new class
+table(DissectionsK$Acanthocephalan) #making sure all was still all right
 
 #Creating a class of combined Tributaries 
 library(tibble)
-SERCANTH1 <- SERCANTH1 %>%
+DissectionsK <- DissectionsK %>%
   mutate(Tributary = case_when(                                #"Class" will be the new column, and "case_when" will give the conditions to populate the column
     endsWith(Tributary, "York_Pamunkey") ~ "York",    #"endsWith: guides where the info is and what value to look for; 
     endsWith(Tributary, "York_Mattaponi") ~ "York", #in this case is looking into "Classification" column and for the value "Cucculanid"
@@ -56,12 +60,12 @@ SERCANTH1 <- SERCANTH1 %>%
     endsWith(Tributary, "Choptank") ~ "Choptank"
   ))
 
-table(SERCacanth$TributaryLocation) #Checking out the new class
-table(SERCacanth$Tributary) #making sure all was still all right
+table(DissectionsK$TributaryLocation) #Checking out the new class
+table(DissectionsK$Tributary) #making sure all was still all right
 
 #Creating a class of combined Month and Seasons 
 library(tibble)
-SERCANTH1 <- SERCANTH1 %>%
+DissectionsK <- DissectionsK %>%
   mutate(Season = case_when(                                #"Class" will be the new column, and "case_when" will give the conditions to populate the column
     endsWith(Season, "Spring") ~ "Spring",    #"endsWith: guides where the info is and what value to look for; 
     endsWith(Season, "September") ~ "Fall", #in this case is looking into "Classification" column and for the value "Cucculanid"
@@ -72,30 +76,22 @@ SERCANTH1 <- SERCANTH1 %>%
     endsWith(Season, "July") ~ "Mid_Summer",
     endsWith(Season, "Early_Summer") ~ "Early_Summer"
   ))
-table(SERCacanth$Season) #Checking out the new class
-table(SERCacanth$Tributary) #making sure all was still all right
+table(DissectionsK$Season) #Checking out the new class
+table(DissectionsK$Tributary) #making sure all was still all right
 
-#Trying to add vectors to Acanthocephlan counts 
-#Trying to create intervals 
-x = seq(from = 1,
-        to = 100,
-        by = 10) #this means (starting number, ending number, interval)
-  
 
 ######Converting a variable into numeric if for some bizarre reason the data did not read as numerical:######
 #A summary of the information within the data set
-summary(acanthocephalan_data) 
+summary(DissectionsK) 
 #for some reason some of the numerical variables are showing as character
 #Converting to numeric
-SERCacanth$FL_mm <- as.numeric(as.character(SERCacanth$FL_mm)) 
-SERCacanth$TL_mm <- as.numeric(as.character(SERCacanth$TL_mm))
-SERCacanth$Acanthocephalan <- as.numeric(as.character(SERCacanth$Acanthocephalan))
-SERCacanth$Age_Class <- as.numeric(as.character(SERCacanth$Age_Class))
-#Check if it worked with:
-summary(acanthocephalan_data1)
-summary(SERCacanth)
+DissectionsK$FL_mm <- as.numeric(as.character(DissectionsK$FL_mm)) 
+DissectionsK$Acanthocephalan <- as.numeric(as.character(DissectionsK$Acanthocephalan))
+DissectionsK$K <- as.numeric(as.character(DissectionsK$K))
+DissectionsK$BodyWWt_g <- as.numeric(as.character(DissectionsK$BodyWWt_g))
+DissectionsK$TL_mm <- as.numeric(as.character(DissectionsK$TL_mm))
+DissectionsK$TL_cm <- as.numeric(as.character(DissectionsK$TL_cm))
+DissectionsK$FL_cm <- as.numeric(as.character(DissectionsK$FL_mm))
 
-#Removing NA
-#For some reason R is adding in LOTs of extra rows 
-SERCANTH1 <- SERCANTH1[-c(1811:nrow(SERCANTH1)), ]
-SERCANTH1
+#Check if it worked with:
+DissectionsK 
