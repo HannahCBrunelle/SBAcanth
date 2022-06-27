@@ -4,59 +4,39 @@
 #Date: June 14,2022 - 
 
 ######Min, 1st Qu., Median, Mean, 3rd Qu., Max (all variables)#####
-summary(SERCacanth) 
-
-#Output
-#FL_mm          TL_mm                Age_Class      BodyWWt_g    Acanthocephalan
-#:3778          :3778                  :3778          :3778          :3778   
-#54     :  51   64     :  42   Adult          :  80   na     : 384   0      :1694   
-#65     :  51   66     :  42   Age_1_4        : 256   1.62   :   9   1      :  33   
-#56     :  42   60     :  36   Age_1_4_PossYOY:  16   1.64   :   9   3      :  16   
-#60     :  42   67     :  36   YOY            :1458   1.99   :   9   2      :  14   
-#61     :  42   (Other):1635                          2.46   :   9   5      :   9   
-#(Other):1582   NA's   :  19                          (Other):1390   (Other):  44   
-#     Tributary   
-#          :3778  
-# Rhode    : 299  
-# Upper_Bay: 281  
-# Choptank : 267  
-# Potomac  : 255  
-# Nanticoke: 186  
-# (Other)  : 522  
-
-#To specify a grouping:
-by(acanthocephalan_data1, acanthocephalan_data1$Tributary, summary) #Min, 1st Qu., Median, Mean, 3rd Qu., Max (by the variable "State")
-by(acanthocephalan_data1, acanthocephalan_data1$Season, summary) #Min, 1st Qu., Median, Mean, 3rd Qu., Max (by the variable "Season")
+summary(DissectionsK) 
 
 # Calculating average using mean() 
-FishLmean <- mean(SERCacanth$FL_mm, na.rm = TRUE)
-TailLmean <- mean(SERCacanth$TL_mm, na.rm = TRUE)
-Acantmean <- mean(SERCacanth$Acanthocephalan, na.rm = TRUE)
-Weightmean <- mean(SERCacanth$BodyWWt_g, na.rm = TRUE)
+FLengthmean <- mean(DissectionsK$FL_cm, na.rm = TRUE) #124.458
+TLengthmean <- mean(DissectionsK$TL_cm, na.rm = TRUE) #112.445
+Acantmean <- mean(DissectionsK$Acanthocephalan, na.rm = TRUE) #1.029
+Weightmean <- mean(DissectionsK$BodyWWt_g, na.rm = TRUE) #146.564
+ConditionF <- mean(DissectionsK$K, na.rm = TRUE) #1.214
 
 #Standard Deviation - All Fish
-FishSD <- sd(SERCacanth$FL_mm, na.rm = TRUE) #122.0538
-TailSD <- sd(SERCacanth$TL_mm, na.rm = TRUE) #130.4156
-BodySD <- sd(SERCacanth$BodyWWt_g, na.rm = TRUE) #528.8053
-AcantSD <-sd(SERCacanth$Acanthocephalan, na.rm = TRUE) #2.061737
+FLengthSD <- sd(DissectionsK$FL_cm, na.rm = TRUE) #110.982
+TLengthSD <- sd(DissectionsK$TL_cm, na.rm = TRUE) #11.860
+AcantSD <-sd(DissectionsK$Acanthocephalan, na.rm = TRUE) #3.567
+BweightSD <- sd(DissectionsK$BodyWWt_g, na.rm = TRUE) #478.337
+ConditionSD <- sd(DissectionsK$K, na.rm = TRUE) #0.129
+
 
 #Variance - All Fish
-FishV <- var(SERCacanth$FL_mm, na.rm = TRUE) #14897.13
-TailV <- var(SERCacanth$TL_mm, na.rm = TRUE) #17008.23
-var(SERCacanth$Age_Class, na.rm = TRUE) #NA does not work
-BodyV <- var(SERCacanth$BodyWWt_g, na.rm = TRUE) #279635.1
-AcantV <- var(SERCacanth$Acanthocephalan, na.rm = TRUE) #4.250758
+FishV <- var(DissectionsK$FL_cm, na.rm = TRUE) #14897.13
+TailV <- var(DissectionsK$TL_mm, na.rm = TRUE) #17008.23
+BodyV <- var(DissectionsK$BodyWWt_g, na.rm = TRUE) #279635.1
+AcantV <- var(DissectionsK$Acanthocephalan, na.rm = TRUE) #4.250758
 
 #Table 1: 
 #A table that summarizes one variable and gives the mean and standard deviation for the value of that variable
 #Tributary and Acanthocephalan Abundance 
-group_by(SERCacanth, TributaryLocation) %>%  
+group_by(DissectionsK, TributaryLocation) %>%  
   summarise(                       #Being summarized by mean and sd.
     mean = mean(Acanthocephalan) ,
     sd = sd(Acanthocephalan, na.rm = TRUE))
 
 #Season and Acanthocephalan Abundance 
-group_by(SERCacanth, Season) %>%  
+group_by(DissectionsK, Season) %>%  
   summarise(                       #Being summarized by mean and sd.
     mean = mean(Acanthocephalan) ,
     sd = sd(Acanthocephalan, na.rm = TRUE))
