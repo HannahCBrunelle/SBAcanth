@@ -63,3 +63,10 @@ boxplot(Parasitized_yes$Acanthocephalan ~ Parasitized_yes$Tributary)
 ggplot(Parasitized_yes) +
   aes(x = Acanthocephalan, y = Tributary, colour = Tributary) +
   geom_boxplot()
+  
+#Boxplot showing Acantho. Abundance per Tributary 
+boxplot(Parasitized_yes$Acanthocephalan ~ Parasitized_yes$Tributary)
+
+ggplot(Parasitized_yes) +
+  aes(x = Acanthocephalan, y = Tributary, colour = Tributary) +
+  geom_boxplot()
