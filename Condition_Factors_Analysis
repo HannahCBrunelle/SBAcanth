@@ -1,4 +1,4 @@
-##### Condition Factors (K) Analysis SERC Striped Bass Dissection Data#####
+##### Condition Factor (K) Analysis SERC Striped Bass Dissection Data#####
 #Author: Hannah C Brunelle
 #Advisor: Dr.Katrina Lohan
 #Date: June 14,2022 - 
@@ -10,17 +10,20 @@ str(DissectionsK)
 ConditionF <- mean(DissectionsK$K, na.rm = TRUE) #1.214
 ConditionSD <- sd(DissectionsK$K, na.rm = TRUE) #0.129
 
-#Conditions Factor and Parasitized Fish 
-group_by(DissectionsK, Parasitized) %>%  
-  summarise(                       #Being summarized by mean and sd.
-    mean = mean(K) ,
-    sd = sd(K, na.rm = TRUE))
+#Sub-setting by a specific value within a variable
+#No parasites found 
+#K (mean 1.221) (min 0.741)(max 2.157)
+Parasitized_no <- subset(DissectionsK, Parasitized == "No")
+View(Parasitized_no)
+summary(Parasitized_no)
 
-#Conditions Factor and Acanthocephalan Counts 
-group_by(DissectionsK, Acanthocephalan) %>%  
-  summarise(                       #Being summarized by mean and sd.
-    mean = mean(K) ,
-    sd = sd(K, na.rm = TRUE))
+#Sub-setting by a specific value within a variable
+#Parasites found 
+#K (mean 1.190) (min 0.652)(max 1.702)
+Parasitized_yes <- subset(DissectionsK, Parasitized == "Yes")
+View(Parasitized_yes)
+summary(Parasitized_yes)
+
 
 #Kruskal Test
 kruskal.test(DissectionsK$Acanthocephalan, DissectionsK$K)
@@ -28,9 +31,46 @@ kruskal.test(DissectionsK$Acanthocephalan, DissectionsK$K)
 kruskal.test(DissectionsK$Parasitized, DissectionsK$K) 
 #Kruskal-Wallis chi-squared = 438.58, df = 438, p-value = 0.4833
 
-#Parasites per Season
-boxplot(DissectionsK$K ~ DissectionsK$Parasitized)
+#Parasites per K - Boxplot
+boxplot(Parasitized_no$K ~ Parasitized_no$Season)
+
+ggplot(Parasitized_no) +
+  aes(x = Season, y = K, colour = Season, na.rm = TRUE) +
+  geom_boxplot()
+
+#Parasites per K - Scatterplot
+library(tidyverse)
+plot(x = DissectionsK$K, y = DissectionsK$Acanthocephalan)
+
+DissectionsK %>% ggplot(aes(x = K, y = Acanthocephalan)) +
+  geom_point(aes(colour = Acanthocephalan)) 
+
+#PLaying around with the scatterplots 
+#How to put titles into plots
+plot(DissectionsK$K,DissectionsK$Acanthocephalan,
+     main='Condition Factor compared to Acanthocephlan Abundance',
+     xlab='Condition Factor (K)',ylab='Acanthocephlan Abundance')
+# plot a regression line
+abline(lm(Acanthocephalan~K,data=DissectionsK),col='red')
+
+
+#Bodyweight per K - Scatterplot
+library(tidyverse)
+plot(x = DissectionsK$K, DissectionsK$BodyWWt_g)
+
+DissectionsK %>% ggplot(aes(x = K, y = BodyWWt_g)) +
+  geom_point(aes(colour = BodyWWt_g)) 
+
+#Tributary and K
+boxplot(DissectionsK$K ~ DissectionsK$Tributary)
 
 ggplot(DissectionsK) +
-  aes(x = Parasitized, y = K, colour = Parasitized, na.rm = TRUE) +
+  aes(x = K, y = Tributary, colour = Tributary, na.rm = TRUE) +
+  geom_boxplot()
+
+#Season and K
+boxplot(DissectionsK$K ~ DissectionsK$Season)
+
+ggplot(DissectionsK) +
+  aes(x = Season, y = K, colour = Season, na.rm = TRUE) +
   geom_boxplot()
