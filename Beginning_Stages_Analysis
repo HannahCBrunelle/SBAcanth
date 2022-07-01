@@ -2,16 +2,13 @@
 #Author: Hannah C Brunelle
 #Advisor: Dr.Katrina Lohan
 #Date: June 14,2022 - 
+#Contact: (508) 246-9084 and brunellehannah@yahoo.com
 
 #Import data
-library(readxl)
-DissectionsK <- read_excel("~/Desktop/DissectionsK.xls")
+library(readr)
+DissectionsK <- read.csv("~/Desktop/Book3.csv")
 View(DissectionsK)
-
-#Removing NA
-#For some reason R is adding in LOTs of extra rows 
-DissectionsK <- DissectionsK[-c(575:nrow(DissectionsK)), ]
-DissectionsK
+as_tibble(DissectionsK)
 
 #Investigating Data
 str(DissectionsK)
@@ -26,16 +23,11 @@ library(lubridate)
 library(dplyr)
 library(ggpubr)
 
-#####Selecting only the data for Acanthocephalans#####
-#Looking at fork and tail length, age, body weight, and total count of the worms
-SERCacanth <- select( FL_mm, TL_mm, Age_Class, BodyWWt_g, Acanthocephalan, Tributary, Season)
-view(SERCacanth)
-
 #Creating a class of parasitized striped bass (yes/no)
 library(tibble)
 DissectionsK <- DissectionsK%>%
   add_column(Parasitized = 
-               if_else(DissectionsK$Acanthocephalan > 0, "Yes", "No"),
+               if_else(DissectionsK$Acanthocephalan > 0,"Yes","No"),
              .after="Acanthocephalan")
 
 table(DissectionsK$Parasitized) #Checking out the new class
@@ -61,7 +53,7 @@ DissectionsK <- DissectionsK %>%
   ))
 
 table(DissectionsK$TributaryLocation) #Checking out the new class
-table(DissectionsK$Tributary) #making sure all was still all right
+table(Parasitized_yes$Tributary) #making sure all was still all right
 
 #Creating a class of combined Month and Seasons 
 library(tibble)
@@ -71,14 +63,23 @@ DissectionsK <- DissectionsK %>%
     endsWith(Season, "September") ~ "Fall", #in this case is looking into "Classification" column and for the value "Cucculanid"
     endsWith(Season, "Fall") ~ "Fall",
     endsWith(Season, "Late_Summer") ~ "Late_Summer",
-    endsWith(Season, "LateSummer") ~ "Late_Summer",
+    endsWith(Season, "Late Summer") ~ "Late_Summer",
     endsWith(Season, "August") ~ "Late_Summer",
     endsWith(Season, "July") ~ "Mid_Summer",
     endsWith(Season, "Early_Summer") ~ "Early_Summer"
   ))
 table(DissectionsK$Season) #Checking out the new class
-table(DissectionsK$Tributary) #making sure all was still all right
+table(DissectionsK$Season) #making sure all was still all right
 
+#Creating a class of combined ages
+DissectionsK <- DissectionsK %>%
+  mutate(Age_Class = case_when(                                #"Class" will be the new column, and "case_when" will give the conditions to populate the column
+    endsWith(Age_Class, "Adult") ~ "Adult",    #"endsWith: guides where the info is and what value to look for; 
+    endsWith(Age_Class, "Age_1_4") ~ "Age_1_4", #in this case is looking into "Classification" column and for the value "Cucculanid"
+    endsWith(Age_Class, "Age_1_4_PossYOY") ~ "Age_1_4",
+    endsWith(Age_Class, "YOY") ~ "YOY"
+  ))
+table(DissectionsK$Age_Class)
 
 ######Converting a variable into numeric if for some bizarre reason the data did not read as numerical:######
 #A summary of the information within the data set
@@ -86,12 +87,18 @@ summary(DissectionsK)
 #for some reason some of the numerical variables are showing as character
 #Converting to numeric
 DissectionsK$FL_mm <- as.numeric(as.character(DissectionsK$FL_mm)) 
-DissectionsK$Acanthocephalan <- as.numeric(as.character(DissectionsK$Acanthocephalan))
-DissectionsK$K <- as.numeric(as.character(DissectionsK$K))
+DissectionsK$Acanthocephalan <- as.numeric(as.factor(DissectionsK$Acanthocephalan))
+Parasitized_yes$K <- as.numeric(as.character(Parasitized_yes$K))
 DissectionsK$BodyWWt_g <- as.numeric(as.character(DissectionsK$BodyWWt_g))
 DissectionsK$TL_mm <- as.numeric(as.character(DissectionsK$TL_mm))
 DissectionsK$TL_cm <- as.numeric(as.character(DissectionsK$TL_cm))
 DissectionsK$FL_cm <- as.numeric(as.character(DissectionsK$FL_mm))
+DissectionsK$Season <- as.character(as.factor(DissectionsK$Season))
+DissectionsK$Tributary <- as.character(as.factor(DissectionsK$Tributary))
+DissectionsK$Age_Class <- as.character(as.factor(DissectionsK$Age_Class))
+
+table(DissectionsK$Age_Class) #Checking out the new class
+table(DissectionsK$Age_Class) #making sure all was still all right
 
 #Check if it worked with:
 DissectionsK 
