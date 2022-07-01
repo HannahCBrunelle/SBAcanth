@@ -22,10 +22,11 @@ ConditionSD <- sd(DissectionsK$K, na.rm = TRUE) #0.129
 
 
 #Variance - All Fish
-FishV <- var(DissectionsK$FL_cm, na.rm = TRUE) #14897.13
-TailV <- var(DissectionsK$TL_mm, na.rm = TRUE) #17008.23
-BodyV <- var(DissectionsK$BodyWWt_g, na.rm = TRUE) #279635.1
-AcantV <- var(DissectionsK$Acanthocephalan, na.rm = TRUE) #4.250758
+FishV <- var(DissectionsK$FL_cm, na.rm = TRUE) #12317.015
+TailV <- var(DissectionsK$TL_cm, na.rm = TRUE) #140.681
+BodyV <- var(DissectionsK$BodyWWt_g, na.rm = TRUE) #228806.626
+AcantV <- var(DissectionsK$Acanthocephalan, na.rm = TRUE) #12.725
+Kvariance <- var(DissectionsK$K, na.rm = TRUE) #0.016
 
 #Table 1: 
 #A table that summarizes one variable and gives the mean and standard deviation for the value of that variable
