@@ -1,0 +1,31 @@
+##### Non Parasitized Analysis - SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+#Sub-setting by a specific value within a variable
+#No parasites found 
+#K (mean 1.221) (min 0.741)(max 2.157)
+Parasitized_no <- subset(DissectionsK, Parasitized == "No")
+View(Parasitized_no)
+summary(Parasitized_no)
+
+#Mean and SD of Condition Factors
+NoMeanK <- mean(Parasitized_no$K, na.rm = TRUE) #1.221
+NoSDK <- sd(Parasitized_no$K, na.rm = TRUE) #0.127
+
+
+#####Shapiro Normality Test#####
+#Add value to the histogram of the distribution
+#The null-hypothesis of this test is that the population is normally distributed. 
+#A data set with a p value of less than .05 rejects the null hypothesis that the data are from a normally distributed population
+shapiro.test(Parasitized_no$FL_cm) 
+shapiro.test(Parasitized_no$TL_cm) 
+shapiro.test(Parasitized_no$BodyWWt_g) 
+shapiro.test(Parasitized_no$K) #W = 0.91969, p-value = 1.777e-12
+
+#Histograms
+hist(Parasitized_no$FL_cm) #NOT NORMAL
+hist(Parasitized_no$TL_cm) #NOT NORMAL
+hist(Parasitized_no$BodyWWt_g) #NOT NORMAL
+hist(Parasitized_no$K) #Show Katrina
