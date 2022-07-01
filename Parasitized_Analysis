@@ -1,0 +1,65 @@
+##### Parasitized Analysis - SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+#Mean and SD of Condition Factors
+YesmeanK <- mean(Parasitized_yes$K, na.rm = TRUE) #1.190
+YesSDK <- sd(Parasitized_yes$K, na.rm = TRUE) #0.130
+
+install.packages("arsenal")
+library(arsenal)
+Comparedf(Parasitized_no, Parasitized_yes)
+
+#Sub-setting by a specific value within a variable
+#Parasites found 
+#K (mean 1.190) (min 0.652)(max 1.702)
+Parasitized_yes <- subset(DissectionsK, Parasitized == "Yes")
+View(Parasitized_yes)
+summary(Parasitized_yes)
+
+#####Shapiro Normality Test#####
+#Add value to the histogram of the distribution
+#The null-hypothesis of this test is that the population is normally distributed. 
+#A data set with a p value of less than .05 rejects the null hypothesis that the data are from a normally distributed population
+shapiro.test(Parasitized_yes$FL_cm) 
+shapiro.test(Parasitized_yes$TL_cm) 
+shapiro.test(Parasitized_yes$BodyWWt_g) 
+shapiro.test(Parasitized_yes$K) #W = 0.94656, p-value = 0.0003226
+
+#Histograms
+hist(Parasitized_yes$FL_cm) #NOT NORMAL
+hist(Parasitized_yes$TL_cm) #NOT NORMAL
+hist(Parasitized_yes$BodyWWt_g) #NOT NORMAL
+hist(Parasitized_yes$K) #Show Katrina
+
+#Parasites per Tributary
+boxplot(Parasitized_yes$K ~ Parasitized_no$K)
+
+ggplot(DissectionsK) +
+  aes(x = Tributary_Main, y = Acanthocephalan, colour = Tributary_Main) +
+  geom_boxplot()
+
+#####Task #1#####
+#Playing around with the scatterplots with Regression Line
+#How to put titles into plots
+plot(Parasitized_yes$K,Parasitized_yes$Acanthocephalan,
+     main='Condition Factor compared to Acanthocephlan Abundance',
+     xlab='Condition Factor (K)',ylab='Acanthocephlan Abundance')
+# plot a regression line
+abline(lm(Acanthocephalan~K,data=Parasitized_yes),col='red')
+
+#Parasites per K - Scatterplot - No Regression
+library(tidyverse)
+plot(x = Parasitized_yes$K, y = Parasitized_yes$Acanthocephalan)
+
+Parasitized_yes %>% ggplot(aes(x = K, y = Acanthocephalan)) +
+  geom_point(aes(colour = Acanthocephalan))
+
+######Task 2######
+#Boxplot showing Acantho. Abundance per Tributary 
+boxplot(Parasitized_yes$Acanthocephalan ~ Parasitized_yes$Tributary)
+
+ggplot(Parasitized_yes) +
+  aes(x = Acanthocephalan, y = Tributary, colour = Tributary) +
+  geom_boxplot()
