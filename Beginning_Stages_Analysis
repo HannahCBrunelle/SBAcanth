@@ -2,7 +2,6 @@
 #Author: Hannah C Brunelle
 #Advisor: Dr.Katrina Lohan
 #Date: June 14,2022 - 
-#Contact: (508) 246-9084 and brunellehannah@yahoo.com
 
 #Import data
 library(readr)
