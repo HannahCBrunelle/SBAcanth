@@ -18,4 +18,4 @@ hist(DissectionsK$FL_cm) #NOT NORMAL
 hist(DissectionsK$TL_cm) #NOT NORMAL
 hist(DissectionsK$BodyWWt_g) #NOT NORMAL
 hist(DissectionsK$Acanthocephalan) #NOT NORMAL
-hist(DissectionsK$K)
+hist(DissectionsK$K) #Show Katrina
