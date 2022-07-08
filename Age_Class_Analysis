@@ -1,0 +1,38 @@
+##### Age Class Analysis - SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+#Adult subset
+AdultK <- subset(DissectionsK, Age_Class == "Adult")
+View(AdultK)
+summary(AdultK)
+
+NoAdultK <- sd(AdultK$NonParasitizedK, na.rm = TRUE) 
+YesAdultK <- sd(AdultK$ParasiztiedK, na.rm = TRUE) 
+AdultKSD <- sd(AdultK$K, na.rm = TRUE) 
+
+#Ages 1-4 Subset
+Agesto4 <- subset(DissectionsK, Age_Class == "Age_1_4")
+View(Agesto4)
+summary(Agesto4)
+
+NoAge <- sd(Agesto4$NonParasitizedK, na.rm = TRUE) 
+YesAge <- sd(Agesto4$ParasiztiedK, na.rm = TRUE) 
+AgeKSD <- sd(Agesto4$K, na.rm = TRUE) 
+
+#Ages 1-4PossYOY Subset
+Agesto4POSS <- subset(DissectionsK, Age_Class == "Age_1_4_PossYOY")
+View(Agesto4POSS)
+summary(Agesto4POSS)
+
+POSSSD <- sd(Agesto4POSS$NonParasitizedK, na.rm = TRUE) 
+
+#Subset YOY
+YOY <- subset(DissectionsK, Age_Class == "YOY")
+View(YOY)
+summary(YOY)
+
+YOYNOSD <- sd(YOY$NonParasitizedK, na.rm = TRUE) 
+YOYYESSD <- sd(YOY$ParasiztiedK, na.rm = TRUE) 
+YOYSD <- sd(YOY$K, na.rm = TRUE) 
