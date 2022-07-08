@@ -31,3 +31,33 @@ boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$Parasitized)
 
 #Parasites per Condition Factor
 boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$K)
+
+#Boxplot showing Acantho. Abundance per Age Class
+boxplot(DissectionsK$ParasiztiedK ~ DissectionsK$Age_Class)
+
+ggplot(DissectionsK) +
+  aes(x = K, y = Age_Class, colour = Parasitized) +
+  geom_boxplot()
+
+
+
+PLotfun <- ggplot(DissectionsK, aes(x = num(K), y = Age_Class)) + 
+  stat_summary(geom = "col", fun = mean) + 
+  stat_summary(geom = "errorbar", 
+               fun = mean,
+               fun.min = function(x) mean(x) - sd(x),
+               fun.max = function(x) mean(x) + sd(x),
+               width = 0.3) + 
+  theme_prism() + 
+  coord_cartesian(ylim = c(0, 35)) + 
+  scale_y_continuous(breaks = seq(0, 35, 5), expand = c(0, 0))
+
+#adding comparisons:
+Age_compare <- list( c("YOY", "Age_1_4PossYOY", "Age_1_4", "Adult")) #Indicates what will be compared in the plot
+Parasitized_compare  <- list( c("Yes, No")) #Does Not Work 
+K_compare <- list( c("K"))
+symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))
+ggplot(DissectionsK) +
+  aes(x = K, y = Age_Class, colour = Parasitized) +
+  geom_boxplot(alpha = 0.6) + guides(x = guide_axis(angle = 90)) +
+  stat_compare_means(method = "wilcox.test", comparisons = K_compare, label = "p.signif", symnum.args = symnum.args, na.rm = TRUE)
