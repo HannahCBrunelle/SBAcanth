@@ -15,6 +15,7 @@ NoMeanK <- mean(Parasitized_no$K, na.rm = TRUE) #1.221
 NoSDK <- sd(Parasitized_no$K, na.rm = TRUE) #0.127
 
 
+
 #####Shapiro Normality Test#####
 #Add value to the histogram of the distribution
 #The null-hypothesis of this test is that the population is normally distributed. 
