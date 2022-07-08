@@ -51,16 +51,15 @@ ggplot(ParasiteSeason) +
        y = "Season",                  # y axis title
        x = "Parasite Prevalence")  # x axis title
 
-#Prevalence of parasitized fish by AgeClass:
-ParasiteAGE <- DissectionsK %>% 
+#Prevalence of parasitized fish by Age Class: 
+ParasiteAge <- DissectionsK %>% 
   count(Age_Class, Parasitized) %>%  # get counts by Tributary and Parasite (Y/N)
-  group_by(Parasitized) %>%        # Group so proportions are out  total
+  group_by(Age_Class) %>%        # Group so proportions are out  total
   mutate(proportion = n/sum(n)*100) # calculate proportions of total
 
-head(ParasiteAGE) # Preview data
+head(ParasiteAge) # Preview data
 
-# Parasites in all samples by Age Class
-ggplot(ParasiteAGE, na.rm = TRUE) +  
+ggplot(ParasiteAge) +  
   geom_col(
     mapping = aes(
       x = proportion,                 # show pre-calculated proportion values
