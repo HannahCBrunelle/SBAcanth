@@ -26,6 +26,8 @@ kruskal.test(DissectionsK$Acanthocephalan, DissectionsK$K)
 kruskal.test(DissectionsK$Parasitized, DissectionsK$K) 
 #Kruskal-Wallis chi-squared = 438.58, df = 438, p-value = 0.4833
 
+kruskal.test(DissectionsK$ParasiztiedK, DissectionsK$NonParasitizedK)
+#p-value = 0.3173
 
 #When the p-value is significant, do the pairwise comparison to identify significantly different groups:
 pairwise.wilcox.test(SERCacanth$BodyWWt_g, SERCacanth$Parasitized,
