@@ -5,9 +5,17 @@
 
 #Import data
 library(readr)
-DissectionsK <- read.csv("~/Desktop/Book3.csv")
+DissectionsK <- read.csv("~/Desktop/Book.5.csv")
 View(DissectionsK)
 as_tibble(DissectionsK)
+
+DATAYesNo <- read.csv("~/Desktop/Book4.csv")
+View(DATAYesNo)
+mean(DATAYesNo$ParasiztiedK, na.rm=TRUE)
+mean(DATAYesNo$NonParasiztiedK)
+mean(DATAYesNo$K, na.rm=TRUE)
+sapply(DATAYesNo$NonParasiztiedK, na.rm = TRUE)
+
 
 #Investigating Data
 str(DissectionsK)
@@ -20,6 +28,11 @@ View(DissectionsK)
 library(tidyverse)
 library(lubridate)
 library(dplyr)
+library(ggpubr)
+library(janitor)
+
+#ggpubr had an error and it was due to needing an older version in order to use it
+install_version("ggpubr", version = "0.2.5", repos = "http://cran.us.r-project.org")
 library(ggpubr)
 
 #Creating a class of parasitized striped bass (yes/no)
@@ -82,7 +95,25 @@ table(DissectionsK$Age_Class)
 
 ######Converting a variable into numeric if for some bizarre reason the data did not read as numerical:######
 #A summary of the information within the data set
+
+#TASK 4
 summary(DissectionsK) 
+table(DissectionsK$K, DissectionsK$ParasiztiedK, DissectionsK$NonParasitizedK)
+as.table(DissectionsK$K)
+
+ 
+#Creating tables with totals using dplyr and janitor functions:
+DissectionsK %>% 
+  summarise(
+    mean = K, ParasiztiedK, NonParasitizedK,
+    sd = K, ParasiztiedK, NonParasitizedK )
+
+group_by(DissectionsK, Parasitized) %>%  #indicates that I am grouping the dataset "YOY" by the various "Classification"
+  summarise(                       #Being summarized by meand and sd.
+    mean = mean(K),
+    sd = sd(K)
+  ) 
+
 #for some reason some of the numerical variables are showing as character
 #Converting to numeric
 DissectionsK$FL_mm <- as.numeric(as.character(DissectionsK$FL_mm)) 
@@ -95,6 +126,7 @@ DissectionsK$FL_cm <- as.numeric(as.character(DissectionsK$FL_mm))
 DissectionsK$Season <- as.character(as.factor(DissectionsK$Season))
 DissectionsK$Tributary <- as.character(as.factor(DissectionsK$Tributary))
 DissectionsK$Age_Class <- as.character(as.factor(DissectionsK$Age_Class))
+DATAYesNo$NonParasitizedK <- as.numeric(as.numeric(DATAYesNo$NonParasitizedK))
 
 table(DissectionsK$Age_Class) #Checking out the new class
 table(DissectionsK$Age_Class) #making sure all was still all right
