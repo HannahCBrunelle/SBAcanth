@@ -1,0 +1,73 @@
+##### Tributary Analysis - SERC Striped Bass Dissection Data#####
+#Author: Hannah C Brunelle
+#Advisor: Dr.Katrina Lohan
+#Date: June 14,2022 - 
+
+#Choptank subset
+ChoptankK <- subset(DissectionsK, Tributary_Main == "Choptank")
+View(ChoptankK)
+summary(ChoptankK)
+
+ChopNoK <- sd(ChoptankK$NonParasitizedK, na.rm = TRUE) 
+ChopYesK <- sd(ChoptankK$ParasiztiedK, na.rm = TRUE) 
+ChopKSD <- sd(ChoptankK$K, na.rm = TRUE) 
+
+#James Subset 
+JamesK <- subset(DissectionsK, Tributary_Main == "James")
+View(JamesK)
+summary(JamesK)
+
+#Nanticoke Subet
+NanticokeK <- subset(DissectionsK, Tributary_Main == "Nanticoke")
+View(NanticokeK)
+summary(NanticokeK)
+
+NanNoK <- sd(NanticokeK$NonParasitizedK, na.rm = TRUE) 
+NanYesK <- sd(NanticokeK$ParasiztiedK, na.rm = TRUE) 
+NanKSD <- sd(NanticokeK$K, na.rm = TRUE) 
+
+#Patuxent Subset
+PatuxentK <- subset(DissectionsK, Tributary_Main == "Patuxent")
+View(PatuxentK) 
+summary(PatuxentK)
+
+PatNoK <- sd(PatuxentK$NonParasitizedK, na.rm = TRUE) 
+PatYesK <- sd(PatuxentK$ParasiztiedK, na.rm = TRUE) 
+PatKSD <- sd(PatuxentK$K, na.rm = TRUE) 
+
+#Potomac Subset
+PotomacK <- subset(DissectionsK, Tributary_Main == "Potomac")
+View(PotomacK) 
+summary(PotomacK)
+
+PotoNoK <- sd(PotomacK$NonParasitizedK, na.rm = TRUE) 
+PotoYesK <- sd(PotomacK$ParasiztiedK, na.rm = TRUE) 
+PotoKSD <- sd(PotomacK$K, na.rm = TRUE) 
+
+#Rappahannock Subset
+RappK <- subset(DissectionsK, Tributary_Main == "Rappahannock")
+View(RappK) 
+summary(RappK)
+
+#Rhode Subset
+RhodeK <- subset(DissectionsK, Tributary_Main == "Rhode")
+View(RhodeK) 
+summary(RhodeK)
+
+RhodeNoK <- sd(RhodeK$NonParasitizedK, na.rm = TRUE) 
+RhodeYesK <- sd(RhodeK$ParasiztiedK, na.rm = TRUE) 
+RhodeKSD <- sd(RhodeK$K, na.rm = TRUE) 
+
+#Upper Bay Subset
+UpperB <- subset(DissectionsK, Tributary_Main == "Upper_Bay")
+View(UpperB) 
+summary(UpperB)
+
+UpperNoK <- sd(UpperB$NonParasitizedK, na.rm = TRUE) 
+UpperYesK <- sd(UpperB$ParasiztiedK, na.rm = TRUE) 
+UpperKSD <- sd(UpperB$K, na.rm = TRUE) 
+
+#York Subset
+YorkKK <- subset(DissectionsK, Tributary_Main == "York")
+View(YorkKK) 
+summary(YorkKK)
