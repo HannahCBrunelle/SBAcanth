@@ -6,8 +6,8 @@
 #####Prevalence Bar Graph#####
 #Prevalence of parasitized fish by tributary:
 ParasiteTributary <- DissectionsK %>% 
-  count(Tributary, Parasitized, na.rm = TRUE) %>%  # get counts by Tributary and Parasite (Y/N)
-  group_by(Tributary, na.rm = TRUE) %>%        # Group so proportions are out  total
+  count(Tributary_Main, Parasitized, na.rm = TRUE) %>%  # get counts by Tributary and Parasite (Y/N)
+  group_by(Tributary_Main, na.rm = TRUE) %>%        # Group so proportions are out  total
   mutate(proportion = n/sum(n)*100) # calculate proportions of total
 
 head(ParasiteTributary) # Preview data
@@ -17,7 +17,7 @@ ggplot(ParasiteTributary, na.rm = TRUE) +
   geom_col(
     mapping = aes(
       x = proportion,                 # show pre-calculated proportion values
-      y = fct_rev(Tributary),          # reverse level order so missing/other at bottom
+      y = fct_rev(Tributary_Main),          # reverse level order so missing/other at bottom
       fill = Parasitized),                # stacked by outcome
     width = 0.5) +                    # thinner bars (out of 1)
   theme_minimal() +                  # Minimal theme 
