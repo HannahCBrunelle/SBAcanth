@@ -11,10 +11,10 @@ ggplot(DissectionsK) +
   geom_boxplot()
 
 #Parasites per Tributary
-boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$Tributary)
+boxplot(DissectionsK$Acanthocephalan ~ DissectionsK$Tributary_Main)
 
 ggplot(DissectionsK) +
-  aes(x = Tributary, y = Acanthocephalan, colour = Tributary) +
+  aes(x = Acanthocephalan, y = Tributary_Main, colour = Tributary_Main) +
   geom_boxplot()
 
 #Parasites per BodyWeight
@@ -53,11 +53,47 @@ PLotfun <- ggplot(DissectionsK, aes(x = num(K), y = Age_Class)) +
   scale_y_continuous(breaks = seq(0, 35, 5), expand = c(0, 0))
 
 #adding comparisons:
-Age_compare <- list( c("YOY", "Age_1_4PossYOY", "Age_1_4", "Adult")) #Indicates what will be compared in the plot
+Age_compare <- list(c("YOY", "Age_1_4"), (c("YOY", "Age_1_4_PossYOY")), (c("YOY", "Age_1_4")), (c("YOY" , "Adult")), (c("Age_1_4_PossYOY","Age_1_4")), (c("Age_1_4_PossYOY","Adult")), (c("Age_1_4","Adult")))
+                    #Indicates what will be compared in the plot
 Parasitized_compare  <- list( c("Yes, No")) #Does Not Work 
 K_compare <- list( c("K"))
 symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))
 ggplot(DissectionsK) +
   aes(x = K, y = Age_Class, colour = Parasitized) +
   geom_boxplot(alpha = 0.6) + guides(x = guide_axis(angle = 90)) +
-  stat_compare_means(method = "wilcox.test", comparisons = K_compare, label = "p.signif", symnum.args = symnum.args, na.rm = TRUE)
+  stat_compare_means(method = "wilcox.test", comparisons = Age_compare, label = "p.signif", symnum.args = symnum.args, na.rm = TRUE)
+
+#Adding Comparisons for Tributaries
+#MESSY with NAs
+Trib_compare <- list(c("Upper_Bay", "Rhode"), (c("Upper_Bay", "Choptank")), (c("Upper_Bay", "Patuxent")), (c("Upper_Bay", "Nanticoke")), (c("Upper_Bay", "Potomac")), (c("Upper_Bay", "Rappahannock")), (c("Upper_Bay", "York")),(c("Upper_Bay", "James")), 
+                    (c("Rhode", "Choptank")), (c("Rhode", "Patuxent")), (c("Rhode" , "Nanticoke")), (c("Rhode","Potomac")), (c("Rhode","Rappahannock")), (c("Rhode","York")), (c("Rhode","James")), 
+                    (c("Choptank", "Patuxent")), (c("Choptank" , "Nanticoke")), (c("Choptank","Potomac")), (c("Choptank","Rappahannock")), (c("Choptank","York")), (c("Choptank","James")),
+                    (c("Patuxent" , "Nanticoke")), (c("Patuxent","Potomac")), (c("Patuxent","Rappahannock")), (c("Patuxent","York")), (c("Patuxent","James")),
+                    (c("Nanticoke","Potomac")), (c("Nanticoke","Rappahannock")), (c("Nanticoke","York")), (c("Nanticoke","James")),
+                    (c("Potomac","Rappahannock")), (c("Potomac","York")), (c("Potomac","James")),
+                    (c("Rappahannock","York")), (c("Rappahannock","James")),
+                    (c("York","James")))
+#Indicates what will be compared in the plot
+symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))
+ggplot(DissectionsK) +
+  aes(x = Acanthocephalan, y = Tributary_Main, colour = Tributary_Main) +
+  geom_boxplot(alpha = 0.6) + guides(x = guide_axis(angle = 90)) +
+  stat_compare_means(method = "wilcox.test", comparisons = Trib_compare, label = "p.signif", symnum.args = symnum.args, na.rm = TRUE)
+
+#Adding Comparisons for Tributaries
+#Less messy - removed NAs
+#Adding Comparisons for Tributaries
+Trib_compare <- list(c("Upper_Bay", "Rhode"), (c("Upper_Bay", "Choptank")), (c("Upper_Bay", "Patuxent")), (c("Upper_Bay", "Nanticoke")), (c("Upper_Bay", "Potomac")), (c("Upper_Bay", "Rappahannock")), (c("Upper_Bay", "York")),(c("Upper_Bay", "James")), 
+                     (c("Rhode", "Patuxent")), (c("Rhode" , "Nanticoke")), (c("Rhode","Potomac")), (c("Rhode","Rappahannock")), (c("Rhode","York")), (c("Rhode","James")), 
+                     (c("Choptank", "Patuxent")), (c("Choptank" , "Nanticoke")), (c("Choptank","Potomac")), (c("Choptank","Rappahannock")), (c("Choptank","York")), (c("Choptank","James")),
+                     (c("Patuxent" , "Nanticoke")), (c("Patuxent","Potomac")), (c("Patuxent","Rappahannock")), (c("Patuxent","York")), (c("Patuxent","James")),
+                     (c("Nanticoke","Potomac")), (c("Nanticoke","Rappahannock")), (c("Nanticoke","York")), (c("Nanticoke","James")),
+                     (c("Potomac","Rappahannock")), (c("Potomac","York")), (c("Potomac","James")),
+                     (c("Rappahannock","York")), (c("Rappahannock","James")),
+                     (c("York","James")))
+#Indicates what will be compared in the plot
+symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))
+ggplot(DissectionsK) +
+  aes(x = Acanthocephalan, y = Tributary_Main, colour = Tributary_Main) +
+  geom_boxplot(alpha = 0.6) + guides(x = guide_axis(angle = 90)) +
+  stat_compare_means(method = "wilcox.test", comparisons = Trib_compare, label = "p.signif", symnum.args = symnum.args, na.rm = TRUE)
