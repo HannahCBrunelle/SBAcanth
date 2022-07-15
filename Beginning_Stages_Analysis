@@ -5,7 +5,7 @@
 
 #Import data
 library(readr)
-DissectionsK <- read.csv("~/Desktop/Book.5.csv")
+DissectionsK <- read.csv("~/Desktop/Book6.csv")
 View(DissectionsK)
 as_tibble(DissectionsK)
 
@@ -34,6 +34,10 @@ library(janitor)
 #ggpubr had an error and it was due to needing an older version in order to use it
 install_version("ggpubr", version = "0.2.5", repos = "http://cran.us.r-project.org")
 library(ggpubr)
+
+install_version("rstatix", version = "0.2.5", repos = "http://cran.us.r-project.org")
+devtools::install_version("cowplot", "0.7.0") # selected option #2
+devtools::install_version("car", "3.0-0") # selected option #3 None
 
 #Creating a class of parasitized striped bass (yes/no)
 library(tibble)
@@ -133,3 +137,10 @@ table(DissectionsK$Age_Class) #making sure all was still all right
 
 #Check if it worked with:
 DissectionsK 
+
+#Changing the Tributary Order
+
+#Reorder a factor to desired way for Boxplots
+DissectionsK$Tributary_Main <- fct_relevel(DissectionsK$Tributary_Main,"James","York","Rappahannock","Potomac","Nanticoke", "Patuxent","Choptank", "Rhode", "Upper_Bay")
+#Reorder a factor to desired way for Prevalence  
+DissectionsK$Tributary_Main <- fct_relevel(DissectionsK$Tributary_Main,"Upper_Bay","Rhode","Choptank","Patuxent","Nanticoke","Potomac","Rappahannock","York","James")
